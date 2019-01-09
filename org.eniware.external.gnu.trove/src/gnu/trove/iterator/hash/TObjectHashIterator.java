@@ -1,0 +1,56 @@
+///////////////////////////////////////////////////////////////////////////////
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+///////////////////////////////////////////////////////////////////////////////
+
+/*
+ * ==================================================================
+ *  Eniware Open Source:Nikolai Manchev
+ *  Apache License 2.0
+ * ==================================================================
+ */
+
+
+package gnu.trove.iterator.hash;
+
+import gnu.trove.impl.hash.TObjectHash;
+import gnu.trove.impl.hash.THashIterator;
+
+
+/**
+ * Iterator for hashtables that use open addressing to resolve collisions.
+ *
+ * @author Eric D. Friedman
+ * @author Rob Eden
+ * @author Jeff Randall
+ * @version $Id: TObjectHashIterator.java,v 1.1.2.4 2009/10/09 01:44:34 robeden Exp $
+ */
+
+public class TObjectHashIterator<E> extends THashIterator<E> {
+
+    protected final TObjectHash _objectHash;
+
+
+    public TObjectHashIterator( TObjectHash<E> hash ) {
+        super( hash );
+        _objectHash = hash;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    protected E objectAtIndex( int index ) {
+        Object obj = _objectHash._set[index];
+        if ( obj == TObjectHash.FREE || obj == TObjectHash.REMOVED ) {
+            return null;
+        }
+        return (E) obj;
+    }
+
+} // TObjectHashIterator
